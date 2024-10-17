@@ -7,7 +7,7 @@ import AdminQuestions from './admin/AdminQuestions';
 import Sections from './Sections';
 import Questions from './Questions';
 import "./App.css"
-import AdminLogin from './admin/Adminlogin';
+import AdminLogin from './admin/AdminLogin';
 import ProtectedRoute from './ProtectedRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
