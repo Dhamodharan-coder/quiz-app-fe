@@ -1,3 +1,3 @@
-const DNS_NAME = "http://localhost:3000";
+const DNS_NAME = "https://dhru-quizapp.onrender.com";
 
 export default DNS_NAME;
