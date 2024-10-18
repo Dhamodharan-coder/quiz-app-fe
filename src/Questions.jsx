@@ -11,6 +11,7 @@ const Questions = () => {
     const [lock, setlock] = useState(false);
     const [wrong, setwrong] = useState("bg-[#EC8944]");
     const [name,setName] = useState("");
+    const [loader,setloader]=useState(false)
 
    
     const [answers, setAnswers] = useState(0); // Store answer results as boolean (true for correct, false for wrong)
@@ -32,11 +33,10 @@ const Questions = () => {
                 setAnswers(prev=>prev+1)
             } else {
                 e.target.classList.add("bg-red-600")
-                option_array[question[next]?.answer-1]?.current.classList.add("bg-green-600")
+                option_array[question[next]?.answer-1]?.current.classList.add("bg-green-600","scale","shake")
                 setlock(true);
             }
         }
-        console.log(answers)
     }
 
    
@@ -48,22 +48,24 @@ const Questions = () => {
                 setnext((prev) => prev + 1);
             }
             setlock(false)
-            option_array.map((e)=>{e.current?.classList.remove("bg-red-600")})
+            option_array.map((e)=>{e.current?.classList.remove("bg-red-600","scale","shake")})
             option_array.map((e)=>{e.current?.classList.remove("bg-green-600")})
             return null
         }
     };
 
-    const handleprev = () => {
-        if (next > 0) {
-            setnext((prev) => prev - 1);
-        }
-    };
+    // const handleprev = () => {
+    //     if (next > 0) {
+    //         setnext((prev) => prev - 1);
+    //     }
+    // };
 
     const fetchQuestions = async () => {
         try {
+            setloader(true)
             const response = await axios.get(`${DNS_NAME}/student/student/question`);
             const filtereddata = response.data.filter((e) => e.categoryid === id);
+            setloader(false)
             setQuestion(filtereddata);
         } catch (error) {
             console.error("Failed to fetch categories", error);
@@ -112,57 +114,61 @@ const Questions = () => {
                 </div>
             ) : ("")}
             <Navbar />
-            <div className='bg-white m-2 sm:m-10 rounded-3xl p-3 sm:p-10'>
-            <div className='text-right'>
-            <span className='text-lg font-bold text-[#652A01]'>{next + 1} / {question.length} </span>
-            </div>
-                <span className='text-lg font-bold text-[#652A01]'>Question No: {next + 1}</span>
-  
-                <h1 className='text-2xl font-bold text-[#652A01] m-6'>{question[next]?.question}</h1>
-
-                {/* Option 1 */}
-                <div ref={option1} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,1) }}>
-                    <div>{question[next]?.option1}</div>
+           {
+            !loader?( <div className='bg-white m-2 sm:m-10 rounded-3xl p-3 sm:p-10'>
+                <div className='text-right'>
+                <span className='text-lg font-bold text-[#652A01]'>{next + 1} / {question.length} </span>
                 </div>
-
-                {/* Option 2 */}
-                <div ref={option2} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,2) }}>
-                    <div>{question[next]?.option2}</div>
-                </div>
-
-                {/* Option 3 */}
-                <div ref={option3} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${ wrong}`} onClick={(e) => { checkans(e,3) }}>
-                    <div>{question[next]?.option3}</div>
-                </div>
-
-                {/* Option 4 */}
-                <div ref={option4} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,4) }}>
-                    <div>{question[next]?.option4}</div>
-                </div>
-
-                {/* Navigation Buttons */}
-                <div className='flex gap-4 items-center justify-center my-12'>
-                    {next === 0 ? (<div><div onClick={handlereload} className='bg-[#652A01] text-white p-3 rounded-2xl text-xl cursor-pointer'>Sections</div></div>) : ("")}
-
-                    {/* <span className='bg-[#652A01] text-white p-3 rounded-2xl cursor-pointer' onClick={handleprev} disabled={next === 0}>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF">
-                            <path d="m287-446.67 240 240L480-160 160-480l320-320 47 46.67-240 240h513v66.66H287Z" />
-                        </svg>
-                    </span> */}
-
-                    {next < question.length - 1 ? (
-                        <span className='bg-[#652A01] text-white p-3 rounded-2xl cursor-pointer' onClick={handlenext}>
+                    <span className='text-lg font-bold text-[#652A01]'>Question No: {next + 1}</span>
+      
+                    <h1 className='text-2xl font-bold text-[#652A01] m-6'>{question[next]?.question}</h1>
+    
+                    {/* Option 1 */}
+                    <div ref={option1} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,1) }}>
+                        <div>{question[next]?.option1}</div>
+                    </div>
+    
+                    {/* Option 2 */}
+                    <div ref={option2} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,2) }}>
+                        <div>{question[next]?.option2}</div>
+                    </div>
+    
+                    {/* Option 3 */}
+                    <div ref={option3} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${ wrong}`} onClick={(e) => { checkans(e,3) }}>
+                        <div>{question[next]?.option3}</div>
+                    </div>
+    
+                    {/* Option 4 */}
+                    <div ref={option4} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,4) }}>
+                        <div>{question[next]?.option4}</div>
+                    </div>
+    
+                    {/* Navigation Buttons */}
+                    <div className='flex gap-4 items-center justify-center my-12'>
+                        {next === 0 ? (<div><div onClick={handlereload} className='bg-[#652A01] text-white p-3 rounded-2xl text-xl cursor-pointer'>Sections</div></div>) : ("")}
+    
+                        {/* <span className='bg-[#652A01] text-white p-3 rounded-2xl cursor-pointer' onClick={handleprev} disabled={next === 0}>
                             <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF">
-                                <path d="M673-446.67H160v-66.66h513l-240-240L480-800l320 320-320 320-47-46.67 240-240Z" />
+                                <path d="m287-446.67 240 240L480-160 160-480l320-320 47 46.67-240 240h513v66.66H287Z" />
                             </svg>
-                        </span>
-                    ) : (
-                        <span className='bg-[#652A01] text-white p-3 rounded-2xl text-xl cursor-pointer' onClick={() => { setresult(true); }}>
-                            Finish
-                        </span>
-                    )}
-                </div>
-            </div>
+                        </span> */}
+    
+                        {next < question.length - 1 ? (
+                            <span className='bg-[#652A01] text-white p-3 rounded-2xl cursor-pointer' onClick={handlenext}>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF">
+                                    <path d="M673-446.67H160v-66.66h513l-240-240L480-800l320 320-320 320-47-46.67 240-240Z" />
+                                </svg>
+                            </span>
+                        ) : (
+                            <span className='bg-[#652A01] text-white p-3 rounded-2xl text-xl cursor-pointer' onClick={() => { setresult(true); }}>
+                                Finish
+                            </span>
+                        )}
+                    </div>
+                </div>):(<div className='flex justify-center'>
+                                    <span className="loader"></span>
+                                </div>)
+           }
         </div>
     );
 }

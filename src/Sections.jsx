@@ -9,11 +9,14 @@ const Sections = () => {
     const { id } = useParams();
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
+    const [loader,setloader]=useState(false)
 
     const fetchCategories = async () => {
       try {
+        setloader(true)
           const response = await axios.get(`${DNS_NAME}/student/student/category`); 
           const filtereddata = response.data.filter((e)=>(e.subjectids === id))
+          setloader(false)
           setCategories(filtereddata);
          
         } catch (error) {
@@ -31,7 +34,7 @@ const Sections = () => {
 
   useEffect(()=>{
     fetchCategories();
-  },[categories])
+  },[])
   return (
     <div>
       <div>
@@ -63,6 +66,10 @@ const Sections = () => {
 
 {/* list */}
     {
+      loader?(<div className='flex justify-center'>
+        <span className="loader"></span>
+    </div>):(<div>
+      {
       categories.map((e,index)=>{
       return  <div  className='bg-[#dc5139] p-8 rounded-3xl text-white flex justify-between items-center' key={index}>
            <div className='flex gap-2'>
@@ -77,6 +84,8 @@ const Sections = () => {
 </div>
     </div>
       })
+    }
+    </div>)
     }
 
     </div>

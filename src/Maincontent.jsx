@@ -9,6 +9,7 @@ const Maincontent = () => {
   const navigate = useNavigate();
   const [subjectdetail,setsubjectdetail] = useState([])
   const [name, setName] = useState("");
+  const [loader,setloader]=useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -22,14 +23,16 @@ const Maincontent = () => {
   });
 
   const subjectdetails =async()=>{
+    setloader(true)
     const response = await axios.get(`${DNS_NAME}/student/student/subject`);
+    setloader(false)
     setsubjectdetail(response.data);
       }
       
 
       useEffect(()=>{
         subjectdetails()
-      },[subjectdetail])
+      },[])
 
   useEffect(() => {
     // Check if 'name' exists in sessionStorage
@@ -92,6 +95,8 @@ const Maincontent = () => {
 </div>
 
    {
+    !loader ? (<div>
+      {
     subjectdetail.map((e,index)=>(
       <div className='bg-[rgb(236,137,68)] p-8 rounded-3xl text-white flex justify-between items-center my-4' key={index}>
       <div className='flex gap-2'>
@@ -105,6 +110,10 @@ const Maincontent = () => {
        </Link>
          </div>
     ))
+   }
+    </div>):(<div className='flex justify-center'>
+                                    <span className="loader"></span>
+                                </div>)
    }
 
     </div>
