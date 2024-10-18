@@ -125,22 +125,21 @@ const Questions = () => {
     
                     {/* Option 1 */}
                     <div ref={option11} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,1) }}>
-                        <div>{question[next]?.option1}</div>
+                        {question[next]?.option1}
                     </div>
-    
                     {/* Option 2 */}
                     <div ref={option12} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,2) }}>
-                        <div>{question[next]?.option2}</div>
+                        {question[next]?.option2}
                     </div>
     
                     {/* Option 3 */}
                     <div ref={option13} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${ wrong}`} onClick={(e) => { checkans(e,3) }}>
-                        <div>{question[next]?.option3}</div>
+                        {question[next]?.option3}
                     </div>
     
                     {/* Option 4 */}
                     <div ref={option14} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,4) }}>
-                        <div>{question[next]?.option4}</div>
+                        {question[next]?.option4}
                     </div>
     
                     {/* Navigation Buttons */}
