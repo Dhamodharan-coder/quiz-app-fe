@@ -18,12 +18,12 @@ const Questions = () => {
 
     const { id } = useParams();
 
-    const option1 = useRef(null)
-    const option2 = useRef(null)
-    const option3 = useRef(null)
-    const option4 = useRef(null)
+    const option11 = useRef(null)
+    const option12 = useRef(null)
+    const option13 = useRef(null)
+    const option14 = useRef(null)
    
-    let option_array = [option1,option2,option3,option4]
+    let option_array = [option11,option12,option13,option14]
     // Function to check the answer
     function checkans(e,ans) {
         if (lock === false) {
@@ -124,22 +124,22 @@ const Questions = () => {
                     <h1 className='text-2xl font-bold text-[#652A01] m-6'>{question[next]?.question}</h1>
     
                     {/* Option 1 */}
-                    <div ref={option1} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,1) }}>
+                    <div ref={option11} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,1) }}>
                         <div>{question[next]?.option1}</div>
                     </div>
     
                     {/* Option 2 */}
-                    <div ref={option2} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,2) }}>
+                    <div ref={option12} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,2) }}>
                         <div>{question[next]?.option2}</div>
                     </div>
     
                     {/* Option 3 */}
-                    <div ref={option3} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${ wrong}`} onClick={(e) => { checkans(e,3) }}>
+                    <div ref={option13} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${ wrong}`} onClick={(e) => { checkans(e,3) }}>
                         <div>{question[next]?.option3}</div>
                     </div>
     
                     {/* Option 4 */}
-                    <div ref={option4} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,4) }}>
+                    <div ref={option14} className={`p-4 rounded-3xl m-4 text-white text-10 sm:text-xl flex justify-between ${wrong}`} onClick={(e) => { checkans(e,4) }}>
                         <div>{question[next]?.option4}</div>
                     </div>
     
